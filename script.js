@@ -1,5 +1,34 @@
+document.addEventListener("DOMContentLoaded", function () {
+    let preloader = document.getElementById("preloader");
+    let content = document.getElementById("content");
+    
+    let minLoadTime = 2000; // ⏳ মিনিমাম ২ সেকেন্ড লোডার চলবে
+    let loadStartTime = Date.now(); // লোডার শুরুর সময় রেকর্ড
+    
+    // ওয়েবসাইট সম্পূর্ণ লোড হলে
+    window.addEventListener("load", function () {
+        let loadEndTime = Date.now();
+        let elapsedTime = loadEndTime - loadStartTime;
+
+        // যদি ২ সেকেন্ড পূর্ণ না হয়, তাহলে অপেক্ষা করবে
+        let remainingTime = minLoadTime - elapsedTime;
+        let delay = remainingTime > 0 ? remainingTime : 0;
+
+        setTimeout(() => {
+            preloader.classList.add("preloader-hide");
+
+            // ১ সেকেন্ড পরে প্রিলোডার সম্পূর্ণ রিমুভ হবে
+            setTimeout(() => {
+                preloader.style.display = "none";
+                content.style.display = "block";
+            }, 1000);
+        }, delay);
+    });
+});
+
+
 // র্যান্ডম ফার্স্ট নামের লিস্ট
-const firstNames = ["Karim Hassan", "Jamal Rashed", "Kamal Ahmed", "Samiul Rahman", "Tanim Khan",
+const firstNames =["Edris Ahmed","Karim Hassan", "Zakiya Sultana", "Jamal Rashed", "Kamal Ahmed", "Samiul Rahman", "Tanim Khan",
 "Shakil Hossain", "Alim Chowdhury", "Rafiul Islam", "Zubair Ali", "Rakib Uddin",
 "Imran Mahmud", "Farhan Akhtar", "Sakib Ahmed", "Iqbal Mollah", "Mahir Riaz",
 "Faisal Chowdhury", "Nabil Rahman", "Sazzad Hossain", "Ashraf Alam", "Sharif Abdullah",
@@ -40,7 +69,7 @@ const firstNames = ["Karim Hassan", "Jamal Rashed", "Kamal Ahmed", "Samiul Rahma
 
 // পাসওয়ার্ড জেনারেটর ফাংশন
 function generatePassword(length = 12) {
-    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$!&";
+    const chars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$&";
     let password = "";
     for (let i = 0; i < length; i++) {
         password += chars.charAt(Math.floor(Math.random() * chars.length));
@@ -121,4 +150,4 @@ function copyText(id, btn) {
     }).catch((err) => {
         console.error("Failed to copy text: ", err);
     });
-      }
+}
